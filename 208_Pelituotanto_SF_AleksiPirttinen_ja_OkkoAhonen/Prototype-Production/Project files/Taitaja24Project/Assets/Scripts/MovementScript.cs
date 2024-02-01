@@ -22,6 +22,8 @@ public class movementScript : MonoBehaviour
     private float jumpBufferTime = 0.075f;
     private float jumpBufferCounter;
 
+    public Animator animator;
+
 
     void Update()
     {
@@ -58,10 +60,13 @@ public class movementScript : MonoBehaviour
 
         if (Input.GetButton("Horizontal"))
         {
+            
             horizontal = Input.GetAxisRaw("Horizontal");
             decelerationTime = 0;
             speed = movementCurve.Evaluate(accelerationTime);
             accelerationTime += Time.deltaTime;
+
+            animator.SetFloat("Speed", 1);
         }
 
         if (Input.GetButton("Horizontal") == false)
@@ -69,6 +74,7 @@ public class movementScript : MonoBehaviour
             accelerationTime = 0;
             speed = decelerationCurve.Evaluate(decelerationTime);
             decelerationTime += Time.deltaTime;
+            animator.SetFloat("Speed", 0);
         }
 
         Flip();

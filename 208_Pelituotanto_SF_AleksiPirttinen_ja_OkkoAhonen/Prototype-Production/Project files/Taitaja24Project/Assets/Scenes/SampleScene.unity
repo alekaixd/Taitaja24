@@ -104946,6 +104946,7 @@ MonoBehaviour:
   decelerationTime: 0
   accelerationTime: 0
   speedMultiplier: 1
+  animator: {fileID: 1858801993}
 --- !u!114 &1858801997
 MonoBehaviour:
   m_ObjectHideFlags: 0
