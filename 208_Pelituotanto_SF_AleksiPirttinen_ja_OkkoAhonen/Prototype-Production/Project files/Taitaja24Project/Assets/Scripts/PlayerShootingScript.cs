@@ -8,8 +8,16 @@ public class PlayerShootingScript : MonoBehaviour
     public GameObject projectilePrefab; // Projektiilin prefab
 
 
+
+
     public GameObject prefabToSpawn;
     private float nextFireTime;
+
+
+    private void Start()
+    {
+
+    }
 
     void Update()
     {
@@ -23,6 +31,8 @@ public class PlayerShootingScript : MonoBehaviour
 
     void Shoot()
     {
+
+
         Vector2 shootingDirection = Vector2.right; // Oletus ammunta suunta
 
         // Katso pelaajan suuntaa ja vaihda ammunta suuntaa tarvittaessa
