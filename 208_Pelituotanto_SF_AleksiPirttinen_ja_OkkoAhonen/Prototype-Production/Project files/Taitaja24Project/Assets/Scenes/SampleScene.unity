@@ -542,7 +542,7 @@ TilemapCollider2D:
     m_Bits: 4294967295
   m_IsTrigger: 0
   m_UsedByEffector: 0
-  m_UsedByComposite: 0
+  m_UsedByComposite: 1
   m_Offset: {x: 0, y: 0}
   m_MaximumTileChangeCount: 1000
   m_ExtrusionFactor: 0
@@ -104836,9 +104836,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4bdac6bd35745cd4c85568b95bc976b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 5
-  jumpingPower: 10
-  isFacingRight: 1
   rb2d: {fileID: 1858801995}
   groundCheck: {fileID: 1886328073}
   groundlayer:
@@ -104860,8 +104857,8 @@ MonoBehaviour:
       inWeight: 0
       outWeight: 0.09583333
     - serializedVersion: 3
-      time: 0.14379923
-      value: 0.87926
+      time: 0.42564178
+      value: 4.728546
       inSlope: 0.7825764
       outSlope: 0.7825764
       tangentMode: 0
@@ -104870,7 +104867,7 @@ MonoBehaviour:
       outWeight: 0.33333334
     - serializedVersion: 3
       time: 1
-      value: 1
+      value: 5
       inSlope: 0.0849055
       outSlope: 0.0849055
       tangentMode: 0
@@ -104880,7 +104877,41 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  time: 0
+  decelerationCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 5
+      inSlope: -81.22322
+      outSlope: -81.22322
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.053533897
+      value: 0.65180427
+      inSlope: -7.1109633
+      outSlope: -7.1109633
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.15893784
+    - serializedVersion: 3
+      time: 0.28149414
+      value: 0
+      inSlope: -0.7509576
+      outSlope: -0.7509576
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.77287114
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  decelerationTime: 0
+  accelerationTime: 0
 --- !u!1 &1886328072
 GameObject:
   m_ObjectHideFlags: 0

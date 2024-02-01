@@ -5,50 +5,70 @@ using UnityEngine;
 public class movementScript : MonoBehaviour
 {
     private float horizontal;
-    [SerializeField] private float speed = 5f;
-    [SerializeField] private float jumpingPower = 10f;
-    [SerializeField] private bool isFacingRight = true;
-    //private Animator animator;
+    private float speed = 5f;
+    private float jumpingPower = 10f;
+    private bool isFacingRight = true;
     public Rigidbody2D rb2d;
     public Transform groundCheck;
     public LayerMask groundlayer;
     public LayerMask paintlayer;
     public AnimationCurve movementCurve;
-    public float time;
-    //private SFX SFX;
+    public AnimationCurve decelerationCurve;
+    public float decelerationTime;
+    public float accelerationTime;
+    public float speedMultiplier = 1;
+    private float coyoteTime = 0.1f;
+    private float coyoteTimeCounter;
+    private float jumpBufferTime = 0.075f;
+    private float jumpBufferCounter;
 
 
-
-    private void Start()
-    {
-        //SFX = GameObject.Find("SFX").GetComponent<SFX>();
-        //animator = gameObject.GetComponent<Animator>();
-    }
     void Update()
     {
-        horizontal = Input.GetAxisRaw("Horizontal");
-        //animator.SetFloat("Hor", horizontal);
-        //SFX.PlayJump();
-        if (Input.GetButtonDown("Jump") && IsGrounded())
+
+        if (IsGrounded())
+        {
+            coyoteTimeCounter = coyoteTime;
+        }
+        else
+        {
+            coyoteTimeCounter -= Time.deltaTime;
+        }
+
+        if (Input.GetButtonDown("Jump"))
+        {
+            jumpBufferCounter = jumpBufferTime;
+        }
+        else
+        {
+            jumpBufferCounter -= Time.deltaTime;
+        }
+
+        if (jumpBufferCounter > 0f && coyoteTimeCounter > 0f)
         {
             rb2d.velocity = new Vector2(rb2d.velocity.x, jumpingPower);
+            jumpBufferCounter = 0f;
         }
 
         if (Input.GetButtonUp("Jump") && rb2d.velocity.y > 0f)
         {
             rb2d.velocity = new Vector2(rb2d.velocity.x, rb2d.velocity.y * 0.5f);
-
+            coyoteTimeCounter = 0f;
         }
-        //animator.SetFloat("Ver", rb2d.velocity.normalized.y);
+
         if (Input.GetButton("Horizontal"))
         {
-            //speed = movementCurve.Evaluate(time);
-            time += Time.deltaTime;
+            horizontal = Input.GetAxisRaw("Horizontal");
+            decelerationTime = 0;
+            speed = movementCurve.Evaluate(accelerationTime);
+            accelerationTime += Time.deltaTime;
         }
 
-        if (Input.GetButtonUp("Horizontal"))
+        if (Input.GetButton("Horizontal") == false)
         {
-            time = 0;
+            accelerationTime = 0;
+            speed = decelerationCurve.Evaluate(decelerationTime);
+            decelerationTime += Time.deltaTime;
         }
 
         Flip();
@@ -56,12 +76,12 @@ public class movementScript : MonoBehaviour
 
     private void FixedUpdate()
     {
-        rb2d.velocity = new Vector2(horizontal * speed, rb2d.velocity.y);
+        rb2d.velocity = new Vector2(horizontal * speed * speedMultiplier, rb2d.velocity.y);
     }
 
     private bool IsGrounded()
     {
-        return Physics2D.OverlapCircle(groundCheck.position, 0.01f, LayerMask.GetMask("Ground", "Paint"));
+        return Physics2D.OverlapCircle(groundCheck.position, 0.2f, LayerMask.GetMask("Ground", "Paint"));
     }
 
     private void Flip()
