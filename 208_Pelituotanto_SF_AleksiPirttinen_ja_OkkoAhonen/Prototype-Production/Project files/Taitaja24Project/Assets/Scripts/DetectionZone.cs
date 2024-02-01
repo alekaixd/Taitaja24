@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class DetectionZone : MonoBehaviour
 {
+    public GameObject detectionZone;
     // Start is called before the first frame update
     void Start()
     {
@@ -14,5 +15,9 @@ public class DetectionZone : MonoBehaviour
     void Update()
     {
         
+    }
+
+    private void OnCollisionExit2D(Collision2D collision)
+    {
     }
 }

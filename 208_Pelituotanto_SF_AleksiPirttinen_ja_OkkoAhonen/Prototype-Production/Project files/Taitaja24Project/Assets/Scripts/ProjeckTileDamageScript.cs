@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class ProjecktileDamageScript : MonoBehaviour
 {
-    public int damage = 10; // Aseta haluamasi vahinkoarvo Unity Editorissa
+    public int damage = 25; // Aseta haluamasi vahinkoarvo Unity Editorissa
 
     void Start()
     {

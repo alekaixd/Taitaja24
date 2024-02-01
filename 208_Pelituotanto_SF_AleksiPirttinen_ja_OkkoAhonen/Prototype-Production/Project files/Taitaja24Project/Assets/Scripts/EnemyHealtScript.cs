@@ -4,8 +4,9 @@ using System.Collections;
 // EnemyHealthScript handles the calculation of enemy health and controls the dying behavior.
 public class EnemyHealthScript : MonoBehaviour
 {
-    public int maxHealth = 100; // Maximum health of the enemy
-    private int currentHealth; // Current health of the enemy
+    public int maxHealth = 100;
+    private int currentHealth;
+    public GameObject speedboost;
 
     void Start()
     {
@@ -30,15 +31,13 @@ public class EnemyHealthScript : MonoBehaviour
     // Handles actions when the enemy dies.
     void Die()
     {
-        // Here, you can implement desired actions when the enemy dies
-        // For example, destroy the game object or trigger death animations
+        Instantiate(speedboost);
         Destroy(gameObject);
     }
 
     // Detects collision with other 2D colliders, specifically the "sword" tag, and triggers death.
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        // Check if the collision is with an object tagged as "sword"
         if (collision.CompareTag("sword"))
         {
             // Trigger death when the enemy is hit by the sword

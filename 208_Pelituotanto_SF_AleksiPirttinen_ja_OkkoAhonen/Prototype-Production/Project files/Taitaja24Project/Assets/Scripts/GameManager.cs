@@ -15,8 +15,6 @@ public class GameManager : MonoBehaviour
     public enum Item
     {
         SpeedBoost,
-        DoubleJump,
-        Projectile,
         AttackSpeed,
     }
 
@@ -29,7 +27,10 @@ public class GameManager : MonoBehaviour
     {
         DontDestroyOnLoad(this);
     }
-
+    public void Start()
+    {
+        player = GameObject.Find("Player");
+    }
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject == exitDoor)
@@ -72,9 +73,9 @@ public class GameManager : MonoBehaviour
             {
                 player.GetComponent<movementScript>().speedMultiplier += 0.1f;
             }
-            else if (item == Item.DoubleJump)
+            if (item == Item.AttackSpeed)
             {
-
+                player.GetComponent<PlayerShootingScript>().fireRate += 0.3f;
             }
         }
     }
