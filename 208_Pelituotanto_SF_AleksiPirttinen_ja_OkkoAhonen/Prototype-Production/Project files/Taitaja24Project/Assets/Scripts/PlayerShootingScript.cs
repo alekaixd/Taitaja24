@@ -1,41 +1,34 @@
 using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// Player combat Script. This script controls the player's two attacks: projectile shooting and sword slashing.
+/// </summary>
 public class PlayerShootingScript : MonoBehaviour
 {
-    public float fireRate = 0.5f; // Projektiilin ammuntataajuus (sekunteina)
-    public Transform projectileSpawnPoint; // Paikka, josta projektiilit luodaan
-    public GameObject projectilePrefab; // Projektiilin prefab
+    public float fireRate = 0.5f; // Projectile firing rate (in seconds)
+    public Transform projectileSpawnPoint; // The place where the projectiles are created
+    public GameObject projectilePrefab; // Projectile prefab
 
-    public Animator animator;
-
+    public Animator animator; // Sword Animator
 
     public GameObject prefabToSpawn;
     private float nextFireTime;
 
 
-    private void Start()
-    {
-
-    }
 
     void Update()
     {
         Shoot();
-        
-
-        
-            sword();
-        
+        sword();
     }
 
-    void Shoot()
+    void Shoot() // Projectile shooting logic
     {
+        
+        Vector2 shootingDirection = Vector2.right; // Default shooting direction
 
-
-        Vector2 shootingDirection = Vector2.right; // Oletus ammunta suunta
-
-        // Katso pelaajan suuntaa ja vaihda ammunta suuntaa tarvittaessa
+        // Check player's direction and change shooting direction if needed
         if (Input.GetAxis("Horizontal") < 0)
         {
             shootingDirection = Vector2.left;
@@ -43,68 +36,72 @@ public class PlayerShootingScript : MonoBehaviour
 
         if (Input.GetButtonDown("Fire1") && Time.time > nextFireTime)
         {
+            // Fire projectile
             nextFireTime = Time.time + fireRate;
 
             GameObject projectile = Instantiate(projectilePrefab, projectileSpawnPoint.position, Quaternion.identity);
             Rigidbody2D projectileRb = projectile.GetComponent<Rigidbody2D>();
             projectileRb.velocity = new Vector2(shootingDirection.x * 10f, shootingDirection.y * 10f);
 
-            // Voit myös kääntää projektiilin spritea pelaajan katsomaan suuntaan
+            // Flip the projectile sprite to face the player's direction
             if (shootingDirection.x < 0)
             {
-                // Käännä sprite vasemmalle
+                // Flip sprite to the left
                 projectile.transform.localScale = new Vector3(-1f, 1f, 1f);
             }
             else
             {
-                // Käännä sprite oikealle
+                // Flip sprite to the right
                 projectile.transform.localScale = new Vector3(1f, 1f, 1f);
             }
         }
     }
+
     void sword()
     {
-        if (Input.GetButtonDown("Fire2")){
-
+        // Sword attack logic
+        if (Input.GetButtonDown("Fire2"))
+        {
             animator.SetBool("SwordAttack", true);
-        // Määritä etäisyys, jolla prefab spawnaa pelaajan eteen
 
+            // Set distance at which the prefab spawns in front of the player
+            float spawnDistance = 1.0f;
 
-        float spawnDistance = 1.0f;
+            // Set direction based on the player's current facing direction
+            Vector2 spawnDirection = transform.right;
 
-        // Määritä suunta pelaajan nykyisen katselusuunnan perusteella
-        Vector2 spawnDirection = transform.right;
+            // Calculate spawn position
+            Vector2 spawnPosition = (Vector2)transform.position + spawnDirection * spawnDistance;
 
-        // Laske spawnauspaikka
-        Vector2 spawnPosition = (Vector2)transform.position + spawnDirection * spawnDistance;
+            // Instantiate the prefab and set its position
+            GameObject spawnedPrefab = Instantiate(prefabToSpawn, spawnPosition, Quaternion.identity);
 
-        // Luo prefab ja aseta sen sijainti
-        GameObject spawnedPrefab = Instantiate(prefabToSpawn, spawnPosition, Quaternion.identity);
-
-        // Käynnistä coroutine poistamaan prefab 0.2 sekunnin kuluttua
-        StartCoroutine(RemovePrefabAfterDelay(spawnedPrefab, 0.5f));
-        StartCoroutine(ResetSwordAttackStateAfterDelay(0.9f));
-
-
+            // Start coroutine to remove the prefab after 0.5 seconds
+            StartCoroutine(RemovePrefabAfterDelay(spawnedPrefab, 0.5f));
+            // Start coroutine to reset SwordAttack animation
+            StartCoroutine(ResetSwordAttackStateAfterDelay(0.9f));
         }
     }
+
     private IEnumerator RemovePrefabAfterDelay(GameObject prefabInstance, float delay)
     {
+        // Wait for a specific duration
         yield return new WaitForSeconds(delay);
 
-        // Tarkista, ettei prefabInstance ole null, koska se voisi olla tuhottu ennen ajan kulumista
+        // Check if prefabInstance is not null, as it could have been destroyed before the time elapsed
         if (prefabInstance != null)
         {
-            // Poista prefab-instansti
+            // Destroy the prefab instance
             Destroy(prefabInstance);
         }
     }
+
     IEnumerator ResetSwordAttackStateAfterDelay(float delay)
     {
-        // Odota tietyn ajan verran
+        // Wait for a specific duration
         yield return new WaitForSeconds(delay);
 
-        // Aseta SwordAttack-animaation tila takaisin false
+        // Set SwordAttack animation state back to false
         animator.SetBool("SwordAttack", false);
     }
 }
