@@ -7,7 +7,7 @@ public class PlayerShootingScript : MonoBehaviour
     public Transform projectileSpawnPoint; // Paikka, josta projektiilit luodaan
     public GameObject projectilePrefab; // Projektiilin prefab
 
-
+    public Animator animator;
 
 
     public GameObject prefabToSpawn;
@@ -64,8 +64,12 @@ public class PlayerShootingScript : MonoBehaviour
     }
     void sword()
     {
-        if (Input.GetButtonDown("Fire2")){ 
+        if (Input.GetButtonDown("Fire2")){
+
+            animator.SetBool("SwordAttack", true);
         // M‰‰rit‰ et‰isyys, jolla prefab spawnaa pelaajan eteen
+
+
         float spawnDistance = 1.0f;
 
         // M‰‰rit‰ suunta pelaajan nykyisen katselusuunnan perusteella
@@ -78,8 +82,11 @@ public class PlayerShootingScript : MonoBehaviour
         GameObject spawnedPrefab = Instantiate(prefabToSpawn, spawnPosition, Quaternion.identity);
 
         // K‰ynnist‰ coroutine poistamaan prefab 0.2 sekunnin kuluttua
-        StartCoroutine(RemovePrefabAfterDelay(spawnedPrefab, 0.2f));
-    }
+        StartCoroutine(RemovePrefabAfterDelay(spawnedPrefab, 0.5f));
+        StartCoroutine(ResetSwordAttackStateAfterDelay(0.9f));
+
+
+        }
     }
     private IEnumerator RemovePrefabAfterDelay(GameObject prefabInstance, float delay)
     {
@@ -91,5 +98,13 @@ public class PlayerShootingScript : MonoBehaviour
             // Poista prefab-instansti
             Destroy(prefabInstance);
         }
+    }
+    IEnumerator ResetSwordAttackStateAfterDelay(float delay)
+    {
+        // Odota tietyn ajan verran
+        yield return new WaitForSeconds(delay);
+
+        // Aseta SwordAttack-animaation tila takaisin false
+        animator.SetBool("SwordAttack", false);
     }
 }
