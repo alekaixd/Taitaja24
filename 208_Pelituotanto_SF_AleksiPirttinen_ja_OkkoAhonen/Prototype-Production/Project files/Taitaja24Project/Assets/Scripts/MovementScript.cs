@@ -116,7 +116,7 @@ public class movementScript : MonoBehaviour
         // Reset the player's position to the beginning upon colliding with an enemy
         if (collision.gameObject.CompareTag("enemy"))
         {
-            transform.position = new Vector2(-25f, 3f);
+            transform.position = new Vector2(0f, 0f);
         }
     }
 }

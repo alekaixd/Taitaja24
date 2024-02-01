@@ -4,16 +4,16 @@ using UnityEngine;
 
 public class SpeedBoost : MonoBehaviour
 {
-    public GameObject gameManager;
+    private GameObject player;
     // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
-    // Update is called once per frame
-    void Update()
+    private void Start()
     {
-        
+        player = GameObject.Find("Player");
+    }
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        player.GetComponent<movementScript>().speedMultiplier += 0.2f;
+        gameObject.SetActive(false);
     }
 }

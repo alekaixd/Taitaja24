@@ -6,7 +6,7 @@ public class EnemyHealthScript : MonoBehaviour
 {
     public int maxHealth = 100;
     private int currentHealth;
-    public GameObject speedboost;
+    public GameObject speedBoost;
 
     void Start()
     {
@@ -25,13 +25,13 @@ public class EnemyHealthScript : MonoBehaviour
         {
             // Perform actions for the enemy's death
             Die();
+            Instantiate(speedBoost);
         }
     }
 
     // Handles actions when the enemy dies.
     void Die()
     {
-        Instantiate(speedboost);
         Destroy(gameObject);
     }
 
