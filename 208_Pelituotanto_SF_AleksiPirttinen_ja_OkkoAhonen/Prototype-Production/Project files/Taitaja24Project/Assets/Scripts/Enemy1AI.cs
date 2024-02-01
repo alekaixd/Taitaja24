@@ -46,12 +46,5 @@ public class Enemy1AI : MonoBehaviour
         transform.localScale = localScale;
     }
 
-    private void OnCollisionExit(Collision collision)
-    {
-        //if(detectionZone )
-    }
-
-
-
 
 }
