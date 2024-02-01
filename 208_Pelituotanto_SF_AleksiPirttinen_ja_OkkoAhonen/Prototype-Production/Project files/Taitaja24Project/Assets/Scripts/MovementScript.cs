@@ -29,9 +29,8 @@ public class movementScript : MonoBehaviour
         horizontal = Input.GetAxisRaw("Horizontal");
         //animator.SetFloat("Hor", horizontal);
         //SFX.PlayJump();
-        if (Input.GetButtonDown("Jump") /*&& IsGrounded()Ä*/)
+        if (Input.GetButtonDown("Jump") && IsGrounded())
         {
-
             rb2d.velocity = new Vector2(rb2d.velocity.x, jumpingPower);
         }
 
@@ -60,11 +59,10 @@ public class movementScript : MonoBehaviour
         rb2d.velocity = new Vector2(horizontal * speed, rb2d.velocity.y);
     }
 
-    /*private bool IsGrounded()
+    private bool IsGrounded()
     {
-        return Physics2D.OverlapCircle(groundCheck.position, 0.2f, LayerMask.GetMask("Ground", "Paint"));
-        Debug.Log("Grounded: ");
-    }*/
+        return Physics2D.OverlapCircle(groundCheck.position, 0.01f, LayerMask.GetMask("Ground", "Paint"));
+    }
 
     private void Flip()
     {
