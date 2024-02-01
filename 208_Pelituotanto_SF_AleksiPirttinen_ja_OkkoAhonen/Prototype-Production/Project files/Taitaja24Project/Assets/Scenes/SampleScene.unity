@@ -477,6 +477,37 @@ RectTransform:
   m_AnchoredPosition: {x: 9.72, y: -10.52}
   m_SizeDelta: {x: 20, y: 5}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &769934681
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 769934682}
+  m_Layer: 0
+  m_Name: Projecktile
+  m_TagString: Untagged
+  m_Icon: {fileID: -5442936267250999957, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &769934682
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 769934681}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.30977422, y: -0.1120302, z: 0.02902612}
+  m_LocalScale: {x: 0.7518797, y: 0.7518797, z: 0.7518797}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1858801992}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &816922817
 GameObject:
   m_ObjectHideFlags: 0
@@ -104655,6 +104686,7 @@ GameObject:
   - component: {fileID: 1858801996}
   - component: {fileID: 1858801995}
   - component: {fileID: 1858801994}
+  - component: {fileID: 1858801997}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -104729,6 +104761,7 @@ Transform:
   m_Children:
   - {fileID: 519420032}
   - {fileID: 1886328073}
+  - {fileID: 769934682}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &1858801993
@@ -104912,6 +104945,24 @@ MonoBehaviour:
     m_RotationOrder: 4
   decelerationTime: 0
   accelerationTime: 0
+  speedMultiplier: 1
+--- !u!114 &1858801997
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1858801990}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 31839326126a6d24ba638dce641cf2e5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fireRate: 0.5
+  projectileSpawnPoint: {fileID: 769934682}
+  projectilePrefab: {fileID: 4972929595395671949, guid: a15974cfd73188346b05eb1ce0a95911, type: 3}
+  animator: {fileID: 1858801993}
+  prefabToSpawn: {fileID: 5076665573690954940, guid: 372418f70cb377a48a51e49d4790fcf8, type: 3}
 --- !u!1 &1886328072
 GameObject:
   m_ObjectHideFlags: 0
