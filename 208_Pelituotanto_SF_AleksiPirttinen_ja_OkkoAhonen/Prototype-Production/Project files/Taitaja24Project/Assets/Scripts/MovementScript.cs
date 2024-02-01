@@ -63,7 +63,7 @@ public class movementScript : MonoBehaviour
 
         if (Input.GetButton("Horizontal"))
         {
-            
+
             horizontal = Input.GetAxisRaw("Horizontal");
             decelerationTime = 0;
             speed = movementCurve.Evaluate(accelerationTime);
