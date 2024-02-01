@@ -103,4 +103,14 @@ public class movementScript : MonoBehaviour
             transform.localScale = localScale;
         }
     }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        // upon hitting an enemy, the player starts over and is teleported to the beginning
+        if (collision.gameObject.CompareTag("enemy"))
+        {
+            transform.position = new Vector2(-25f, 3f);
+
+        }
+    }
 }

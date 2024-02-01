@@ -48,6 +48,10 @@ public class Enemy1AI : MonoBehaviour
 
     private void OnCollisionExit(Collision collision)
     {
-        if(detectionZone )
+        //if(detectionZone )
     }
+
+
+
+
 }
