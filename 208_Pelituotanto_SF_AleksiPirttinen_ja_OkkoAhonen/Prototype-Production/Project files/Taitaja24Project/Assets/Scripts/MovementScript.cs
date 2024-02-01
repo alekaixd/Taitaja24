@@ -27,10 +27,9 @@ public class movementScript : MonoBehaviour
 
     public Animator animator;
 
-
     void Update()
     {
-
+        // Coyote time: allows jumping shortly after leaving the ground
         if (IsGrounded())
         {
             coyoteTimeCounter = coyoteTime;
@@ -40,6 +39,7 @@ public class movementScript : MonoBehaviour
             coyoteTimeCounter -= Time.deltaTime;
         }
 
+        // Jump buffer: allows for responsive jumping
         if (Input.GetButtonDown("Jump"))
         {
             jumpBufferCounter = jumpBufferTime;
@@ -49,58 +49,74 @@ public class movementScript : MonoBehaviour
             jumpBufferCounter -= Time.deltaTime;
         }
 
+        // Check for jump input and apply jump if within buffer time and coyote time
         if (jumpBufferCounter > 0f && coyoteTimeCounter > 0f)
         {
             rb2d.velocity = new Vector2(rb2d.velocity.x, jumpingPower);
             jumpBufferCounter = 0f;
         }
 
+        // Reduce upward velocity when jump button is released
         if (Input.GetButtonUp("Jump") && rb2d.velocity.y > 0f)
         {
             rb2d.velocity = new Vector2(rb2d.velocity.x, rb2d.velocity.y * 0.5f);
             coyoteTimeCounter = 0f;
         }
 
+        // Handle horizontal movement
         if (Input.GetButton("Horizontal"))
         {
-            
             horizontal = Input.GetAxisRaw("Horizontal");
             decelerationTime = 0;
             speed = movementCurve.Evaluate(accelerationTime);
             accelerationTime += Time.deltaTime;
 
-            animator.SetFloat("Speed", 1);
+            animator.SetFloat("Speed", 1); // Set animator parameter for running animation
         }
 
+        // Apply deceleration when horizontal input is released
         if (Input.GetButton("Horizontal") == false)
         {
             accelerationTime = 0;
             speed = decelerationCurve.Evaluate(decelerationTime);
             decelerationTime += Time.deltaTime;
-            animator.SetFloat("Speed", 0);
+            animator.SetFloat("Speed", 0); // Set animator parameter for idle animation
         }
 
+        // Flip the character if the direction changes
         Flip();
     }
 
-    private void FixedUpdate() //decreases movement speed
+    private void FixedUpdate()
     {
+        // Move the player horizontally
         rb2d.velocity = new Vector2(horizontal * speed * speedMultiplier, rb2d.velocity.y);
     }
 
-    private bool IsGrounded() //checks if the player touches the ground
+    private bool IsGrounded()
     {
+        // Check if the player is touching the ground
         return Physics2D.OverlapCircle(groundCheck.position, 0.2f, LayerMask.GetMask("Ground", "Paint"));
     }
 
-    private void Flip()//if the player changes the direction of travel, the player character is flipped
+    private void Flip()
     {
+        // Flip the player character when changing direction
         if (isFacingRight && horizontal < 0f || !isFacingRight && horizontal > 0f)
         {
             isFacingRight = !isFacingRight;
             Vector3 localScale = transform.localScale;
             localScale.x *= -1f;
             transform.localScale = localScale;
+        }
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        // Reset the player's position to the beginning upon colliding with an enemy
+        if (collision.gameObject.CompareTag("enemy"))
+        {
+            transform.position = new Vector2(-25f, 3f);
         }
     }
 }
