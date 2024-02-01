@@ -1,0 +1,17 @@
+You travel the dungeons as the player and collect powerups. When you have killed all the enemies in the level you loop
+back and kill more enemies. When you die you save one powerup. After you die you are sent to the "lobby" where you can
+choose one powerup to save. Theb you run into the dungeons once more.
+
+the gameplay loop will be: go into the dungeon -> get powerups and progress farther into the dungeon -> die -> loop
+
+the genre of the game will be roguelike
+
+our game will be unique because you can choose which powerup to save.
+
+the game will be made for pc mainly but it could easily be ported to console
+
+the game won't be story based.
+
+the intended audience is pre-teens to teens to adults who want a fun roguelike experience
+
+the game will be easy and light to run on most pc:s
