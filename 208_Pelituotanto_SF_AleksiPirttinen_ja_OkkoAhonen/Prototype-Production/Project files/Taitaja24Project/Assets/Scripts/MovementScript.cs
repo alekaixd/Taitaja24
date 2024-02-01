@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Player Movement Script
+/// </summary>
 public class movementScript : MonoBehaviour
 {
     private float horizontal;
@@ -80,17 +83,17 @@ public class movementScript : MonoBehaviour
         Flip();
     }
 
-    private void FixedUpdate()
+    private void FixedUpdate() //decreases movement speed
     {
         rb2d.velocity = new Vector2(horizontal * speed * speedMultiplier, rb2d.velocity.y);
     }
 
-    private bool IsGrounded()
+    private bool IsGrounded() //checks if the player touches the ground
     {
         return Physics2D.OverlapCircle(groundCheck.position, 0.2f, LayerMask.GetMask("Ground", "Paint"));
     }
 
-    private void Flip()
+    private void Flip()//if the player changes the direction of travel, the player character is flipped
     {
         if (isFacingRight && horizontal < 0f || !isFacingRight && horizontal > 0f)
         {
