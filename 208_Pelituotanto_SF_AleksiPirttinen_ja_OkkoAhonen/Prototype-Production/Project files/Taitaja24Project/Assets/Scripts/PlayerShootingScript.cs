@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 
 public class PlayerShootingScript : MonoBehaviour
 {
@@ -6,15 +7,32 @@ public class PlayerShootingScript : MonoBehaviour
     public Transform projectileSpawnPoint; // Paikka, josta projektiilit luodaan
     public GameObject projectilePrefab; // Projektiilin prefab
 
+
+
+
+    public GameObject prefabToSpawn;
     private float nextFireTime;
+
+
+    private void Start()
+    {
+
+    }
 
     void Update()
     {
         Shoot();
+        
+
+        
+            sword();
+        
     }
 
     void Shoot()
     {
+
+
         Vector2 shootingDirection = Vector2.right; // Oletus ammunta suunta
 
         // Katso pelaajan suuntaa ja vaihda ammunta suuntaa tarvittaessa
@@ -42,6 +60,36 @@ public class PlayerShootingScript : MonoBehaviour
                 // K‰‰nn‰ sprite oikealle
                 projectile.transform.localScale = new Vector3(1f, 1f, 1f);
             }
+        }
+    }
+    void sword()
+    {
+        if (Input.GetButtonDown("Fire2")){ 
+        // M‰‰rit‰ et‰isyys, jolla prefab spawnaa pelaajan eteen
+        float spawnDistance = 1.0f;
+
+        // M‰‰rit‰ suunta pelaajan nykyisen katselusuunnan perusteella
+        Vector2 spawnDirection = transform.right;
+
+        // Laske spawnauspaikka
+        Vector2 spawnPosition = (Vector2)transform.position + spawnDirection * spawnDistance;
+
+        // Luo prefab ja aseta sen sijainti
+        GameObject spawnedPrefab = Instantiate(prefabToSpawn, spawnPosition, Quaternion.identity);
+
+        // K‰ynnist‰ coroutine poistamaan prefab 0.2 sekunnin kuluttua
+        StartCoroutine(RemovePrefabAfterDelay(spawnedPrefab, 0.2f));
+    }
+    }
+    private IEnumerator RemovePrefabAfterDelay(GameObject prefabInstance, float delay)
+    {
+        yield return new WaitForSeconds(delay);
+
+        // Tarkista, ettei prefabInstance ole null, koska se voisi olla tuhottu ennen ajan kulumista
+        if (prefabInstance != null)
+        {
+            // Poista prefab-instansti
+            Destroy(prefabInstance);
         }
     }
 }
