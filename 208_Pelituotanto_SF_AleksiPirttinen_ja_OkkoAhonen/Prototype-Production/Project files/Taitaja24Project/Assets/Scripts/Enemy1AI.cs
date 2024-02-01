@@ -9,6 +9,7 @@ public class Enemy1AI : MonoBehaviour
 
     public Transform groundCheck2;
     public Transform groundCheck1;
+    public GameObject detectionZone;
 
     private void Start()
     {
@@ -27,11 +28,7 @@ public class Enemy1AI : MonoBehaviour
         // Käytä Rigidbodyn liikuttamiseen
         rb.velocity = movement;
 
-        // Käännä suuntaa, jos törmätään esteeseen tai reunukseen
-        if (!IsGrounded() || IsBlocked())
-        {
-            Flip();
-        }
+        
 
         if (Input.GetKeyDown(KeyCode.S))
         {
@@ -40,23 +37,6 @@ public class Enemy1AI : MonoBehaviour
         }
     }
 
-    private bool IsGrounded()
-    {
-        // Tarkista, onko Goomba törmännyt esteeseen (voit laajentaa tätä tarvittaessa)
-        Collider2D hitCollider = Physics2D.OverlapCircle(groundCheck2.position, 0.05f, LayerMask.GetMask("Ground"));
-
-        return hitCollider != null;
-    }
-
-    private bool IsBlocked()
-    {
-        // Tarkista, onko Goomba törmännyt esteeseen (voit laajentaa tätä tarvittaessa)
-        Collider2D hitCollider = Physics2D.OverlapCircle(groundCheck1.position, 0.05f, LayerMask.GetMask("Ground"));
-
-        return hitCollider != null;
-    }
-
-
     private void Flip()
     {
         // Käännä Goomba toiseen suuntaan
@@ -64,5 +44,10 @@ public class Enemy1AI : MonoBehaviour
         Vector3 localScale = transform.localScale;
         localScale.x *= -1f;
         transform.localScale = localScale;
+    }
+
+    private void OnCollisionExit(Collision collision)
+    {
+        if(detectionZone )
     }
 }
