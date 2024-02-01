@@ -1,5 +1,5 @@
 using UnityEngine;
-
+using System.Collections;
 public class EnemyHealthScript : MonoBehaviour
 {
     public int maxHealth = 100;
@@ -26,4 +26,13 @@ public class EnemyHealthScript : MonoBehaviour
         // Esimerkiksi tuhota peliobjekti tai k‰ynnist‰‰ kuolinoletus
         Destroy(gameObject);
     }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("sword"))
+        {
+            Die();
+        }
+    }
+
 }
